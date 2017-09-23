@@ -17,21 +17,24 @@ void mp3find(string s){
 
 		while((ent=readdir(dir))!=NULL){
 			if(strcmp(ent->d_name,".")==0 || strcmp(ent->d_name,"..")==0 || ent->d_name[0]=='.')
-				continue;                                  				//skips the entities names '.','..' and '.*'
+				continue;                                  		        //skips the entities names '.','..' and '.*'
 			if(ent->d_type==DT_DIR){                       				//checks if a directory
-	            string temp1(ent->d_name);
+	                        string temp1(ent->d_name);
 				temp=s+"/"+temp1;
-				mp3find(temp);                            				//recursive call to mp3find
+				mp3find(temp);                            		        //recursive call to mp3find
 			} 
-	        if(ent->d_type==DT_REG){                       				//checks if a regular file
-	            if(ent->d_name[strlen(ent->d_name)-1]=='3')             //checks if an mp3 file
-	            cout<<ent->d_name<<" "<<s<<endl;                        //prints the filename and file directory
-	        }
+	                if(ent->d_type==DT_REG){
+	                        string temp2;
+	                        for(int i=strlen(ent->d_name)-4;i<strlen(ent->d_name);i++)
+	                            temp2.push_back(ent->d_name[i]); 	                        //checks if a regular file
+	                        if(temp2==".mp3")                                               //checks if an mp3 file
+	                            cout<<ent->d_name<<" "<<s<<endl;                            //prints the filename and file directory
+	                }
 
 		}
 
-	    closedir(dir);
-    }
+	        closedir(dir);
+        }
 }
 int main(){
 
