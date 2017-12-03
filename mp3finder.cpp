@@ -57,19 +57,24 @@ void mp3find(string s){
     dirfile d(s);
     if(d.dir!=NULL){
         while((d.ent=readdir(d.dir))!=NULL){
+            
             //skips the entities names '.','..' and '.*'
+            
             if(strcmp(d.ent->d_name,".")==0 || strcmp(d.ent->d_name,"..")==0 || d.ent->d_name[0]=='.')
                 continue;
+            
             //checks for directory
+            
             if(d.isDir()){
                 string temp(d.ent->d_name);
                 temp=s+"/"+temp; 
                 mp3find(temp);
             }
+            
             //checks for mp3 file
+            
             if(d.isMp3()){
-                mp3file m((string)d.ent->d_name,s);
-                
+                mp3file m((string)d.ent->d_name,s);          
                 list.push_back(m);                                      
             }    
         }
@@ -84,5 +89,5 @@ int main(){
     cin>>inputPath;
     mp3find(inputPath);
     for(int i=0;i<list.size();i++)
-        cout<<list[i].showFile()<<"\t"<<list[i].showPath()<<endl;   
+    cout<<list[i].showFile()<<"\t"<<list[i].showPath()<<endl;   
 }
